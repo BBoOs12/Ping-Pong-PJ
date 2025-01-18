@@ -2,3 +2,12 @@
 from pygame import *
 
 print("Hellow World!")
+
+
+
+def test():
+    x = input("Enter something: ")  
+    print(len(x))
+    print(x)  
+
+test() 
