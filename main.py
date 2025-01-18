@@ -1,4 +1,4 @@
-#Copyright (c) 2024 Blazeboss
+#Copyright (c) 2025 Blazeboss
 from pygame import *
 
 print("Hellow World!")
