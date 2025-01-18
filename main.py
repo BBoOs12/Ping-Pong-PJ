@@ -1,13 +1,16 @@
-#Copyright (c) 2025 Blazeboss
 from pygame import *
 
-print("Hellow World!")
+window = display.set_mode((700,500))
+window.fill((80, 120, 120))
 
 
+FPS = 60
+clock = time.Clock()
+game = True
+while game:
+    for e in event.get():
+        if e.type == QUIT:
+            game = False
 
-def test():
-    x = input("Enter something: ")  
-    print(len(x))
-    print(x)  
-
-test() 
+    clock.tick(FPS)   
+    display.update()
