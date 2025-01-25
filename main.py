@@ -21,7 +21,7 @@ class GameSprite(sprite.Sprite):
 class Racket_1(GameSprite):
     def movement(self):
         key_pressed = key.get_pressed()
-        if key_pressed[pygame.K_w] and self.rect.y > -5:
+        if key_pressed[pygame.K_w] and self.rect.y > 0:
             self.rect.y -= self.speed 
         if key_pressed[pygame.K_s] and self.rect.y < 400:
             self.rect.y += self.speed 
@@ -29,18 +29,33 @@ class Racket_1(GameSprite):
 class Racket_2(GameSprite):
     def movement(self):
         key_pressed = key.get_pressed()
-        if key_pressed[pygame.K_UP] and self.rect.y > -5:
+        if key_pressed[pygame.K_UP] and self.rect.y > 0:
             self.rect.y -= self.speed 
         if key_pressed[pygame.K_DOWN] and self.rect.y < 400:
             self.rect.y += self.speed
 
 
-racket_1 = Racket_1("source/Player.png", 50, 225, 25, 100)
-racket_2 = Racket_2("source/Player.png", 615, 225, 25, 100)
+racket_1 = Racket_1("source/Player.png", 20, 225, 25, 100)
+racket_2 = Racket_2("source/Player.png", 650, 225, 25, 100)
+ball = GameSprite('source/ball.png', 450, 225, 40, 40)
+
+#Value 
+FPS = 60
+speed_x = 3
+speed_y = 3
+white = (255, 255, 255)
+
+#Texts
+font = pygame.font.SysFont("Arial", 36)
+lose1 = font.render("P1 : Game Over", True, white)
+lose2 = font.render("P2 : Game Over", True, white)
+
+
+
 
 # Game loop
-FPS = 60
 clock = time.Clock()
+finish =False
 game = True
 while game:
     for e in event.get():
@@ -48,20 +63,34 @@ while game:
             game = False
 
     window.fill((80, 120, 120))  
+    if finish != True:
+        #player1
+        racket_1.movement()
+        racket_1.draw(window)
+        
+        #player2
+        racket_2.draw(window)
+        racket_2.movement()
 
-    #player1
-    racket_1.movement()
-    racket_2.movement()
+        ball.draw(window)
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
 
-    #player2
-    racket_1.draw(window)
-    racket_2.draw(window)
+    if sprite.collide_rect(racket_1, ball) or sprite.collide_rect(racket_2, ball):
+        speed_x = speed_x *(-1)
 
+    if ball.rect.y > 450 or ball.rect.y < 0:
+        speed_y = speed_y * (-1)
 
+    if ball.rect.x > 700:
+        finish = True
+        window.blit(lose1,(200, 200))
 
-
+    if ball.rect.x < 0:
+        finish = True
+        window.blit(lose2,(200, 200))
     #for debug
-    print(racket_1.rect.y)
+    #print(racket_1.rect.y)
 
 
     display.update()
