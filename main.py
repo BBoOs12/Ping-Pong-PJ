@@ -62,6 +62,12 @@ while game:
         if e.type == pygame.QUIT:
             game = False
 
+    key_pressed = key.get_pressed()
+    if key_pressed[pygame.K_r]:
+        finish = False
+        ball.rect.x = 450
+        ball.rect.x = 450
+
     window.fill((80, 120, 120))  
     if finish != True:
         #player1
